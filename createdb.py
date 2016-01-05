@@ -14,26 +14,28 @@ import sys
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-#### Declaring Initial Variables ####
+#### This is the setup section and the only part that requires modification for basic use ####
 
 # Username (as needed)
 username = "user"
 
 # May also consider to take a string argument, dbname, from createDatabase()
-dbname = "test7"
+dbname = "database"
 
 # May also consider to take a string argument, table_1, from createDatabase() to pass to createTable()
 table_1 = "posts"
 
+# Change this query based on database needs.
 db_query = "CREATE DATABASE " + dbname + ";"
 
+# Change this query based on table needs.
 table_query = '''
-			  CREATE TABLE posts ( content TEXT,
-								   nickname TEXT,
-			                       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-			                       id SERIAL );
-			  '''
-
+	      CREATE TABLE posts ( content TEXT,
+				   nickname TEXT,
+			           time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			           id SERIAL );
+	      '''
+#### End of setup ####
 
 #### Declaring Strings for Error Checking and State Management ####
 
@@ -81,8 +83,7 @@ def createDatabase():
 	# the low confidence method: it's going to "try" to do everything.
 	try:
 		# connect to default system database, postgres.
-		try: 
-			con = None
+		try:
 			con = psycopg2.connect(dbname='postgres')
 			print op_con_0
 		except: 
