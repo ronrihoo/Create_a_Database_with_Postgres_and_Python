@@ -1,3 +1,15 @@
+# createdb.py
+#
+# brief: creates a database and a table within that database
+# 	 using PostgreSQL and Python.
+#
+# note: the name of the script is not supposed to be anything
+#       special. I'm sure there are thousands of createdb.py's
+#       out there. I hope that this will help you, in the case
+#       that you need it, because it works.
+#
+# Author: Ron Rihoo
+
 import sys
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
@@ -8,10 +20,19 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 username = "user"
 
 # May also consider to take a string argument, dbname, from createDatabase()
-dbname = "shoutbox"
+dbname = "test7"
 
 # May also consider to take a string argument, table_1, from createDatabase() to pass to createTable()
 table_1 = "posts"
+
+db_query = "CREATE DATABASE " + dbname + ";"
+
+table_query = '''
+			  CREATE TABLE posts ( content TEXT,
+								   nickname TEXT,
+			                       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			                       id SERIAL );
+			  '''
 
 
 #### Declaring Strings for Error Checking and State Management ####
@@ -57,8 +78,6 @@ op_gen_2 = "Table '" + table_1 + "' has been created."
 
 # Create a database
 def createDatabase():
-	query = "CREATE DATABASE " + dbname + ";"
-
 	# the low confidence method: it's going to "try" to do everything.
 	try:
 		# connect to default system database, postgres.
@@ -88,10 +107,10 @@ def createDatabase():
 
 		# run query to build database
 		try: 
-			cur.execute(query)
+			cur.execute(db_query)
 			print op_cur_1
 		except:
-			print err_cur_1 + query
+			print err_cur_1 + db_query
 			return
 
 		# close cursor and connection, then print operation state
@@ -117,13 +136,6 @@ def createDatabase():
 # creates a table
 def createTable():
 	print op_jmp_2
-
-	query = '''
-			CREATE TABLE posts ( content TEXT,
-								 nickname TEXT,
-			                     time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-			                     id SERIAL );
-			'''
 	
 	try:
 		# connect to database
@@ -144,10 +156,10 @@ def createTable():
 		
 		# run query to create table
 		try: 
-			c.execute(query)
+			c.execute(table_query)
 			print op_cur_1
 		except: 
-			print err_cur_1 + query
+			print err_cur_1 + table_query
 			return
 
 		try:
