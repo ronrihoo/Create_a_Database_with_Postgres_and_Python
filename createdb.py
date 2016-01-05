@@ -1,3 +1,15 @@
+# createdb.py
+#
+# brief: creates a database and a table within that database
+# 	 using PostgreSQL and Python.
+#
+# note: the name of the script is not supposed to be anything
+#       special. I'm sure there are thousands of createdb.py's
+#       out there. I hope that this will help you, in the case
+#       that you need it, because it works.
+#
+# Author: Ron Rihoo
+
 import sys
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
